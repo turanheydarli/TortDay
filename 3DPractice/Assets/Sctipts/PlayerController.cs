@@ -1,11 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float radius;
+    [SerializeField] private LayerMask layer;
     [SerializeField] private float smoothTurnTime;
+    [SerializeField] private float attackDelay;
+
+    private float lastAttackTime;
 
     private Vector3 _direction;
     private Rigidbody _rigidbody;
@@ -18,6 +21,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Time.time >= lastAttackTime + attackDelay)
+        {
+            Attack();
+            lastAttackTime = Time.time;
+        }
+
         _direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
         if (_direction.magnitude > 0.01f)
@@ -29,6 +38,16 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, angle, 0);
 
             _rigidbody.MovePosition(transform.position + (_direction.normalized * (speed * Time.deltaTime)));
+        }
+    }
+
+    private void Attack()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, radius, layer);
+
+        foreach (var tree in colliders)
+        {
+            tree.GetComponent<Tree>().Hit();
         }
     }
 }
