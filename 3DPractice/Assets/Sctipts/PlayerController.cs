@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         {
             float targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentTurnAngle,
-                smoothTurnTime);
+                0.3f);
 
             transform.rotation = Quaternion.Euler(0, angle, 0);
 
