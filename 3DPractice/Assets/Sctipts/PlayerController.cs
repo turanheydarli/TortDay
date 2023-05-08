@@ -1,13 +1,17 @@
 using UnityEngine;
-
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] public int item;
+    
     [SerializeField] private float speed;
     [SerializeField] private float radius;
     [SerializeField] private LayerMask layer;
     [SerializeField] private float smoothTurnTime;
     [SerializeField] private float attackDelay;
 
+    [SerializeField] private FloatingJoystick _joystick;
+
+    
     private float lastAttackTime;
 
     private Vector3 _direction;
@@ -27,7 +31,7 @@ public class PlayerController : MonoBehaviour
             lastAttackTime = Time.time;
         }
 
-        _direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        _direction = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);
 
         if (_direction.magnitude > 0.01f)
         {
@@ -47,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (var tree in colliders)
         {
+            item++;
             tree.GetComponent<Tree>().Hit();
         }
     }
