@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 _direction;
     private Rigidbody _rigidbody;
     private float _currentTurnAngle;
+    
+    public bool hasKey;
 
     void Start()
     {
