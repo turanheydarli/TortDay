@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3469287837949704987}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 50dc625cfd3d0f44fb9b33bfddf73e72, type: 2}
+  - {fileID: 2100000, guid: 34ab0a4809e6bbe44b78b757b3e87eda, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

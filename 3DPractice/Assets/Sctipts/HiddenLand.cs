@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class HiddenLand : MonoBehaviour
@@ -15,11 +16,17 @@ public class HiddenLand : MonoBehaviour
 
             if (price <= player.item)
             {
-                foreach (Transform item in transform)
-                {
-                    item.gameObject.SetActive(true);
-                }
+                StartCoroutine(OpenLands());
             }
+        }
+    }
+
+    IEnumerator OpenLands()
+    {
+        foreach (Transform item in transform)
+        {
+            item.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

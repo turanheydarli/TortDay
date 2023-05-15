@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] public int item;
-    
+
     [SerializeField] private float speed;
     [SerializeField] private float radius;
     [SerializeField] private LayerMask layer;
@@ -11,17 +13,20 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private FloatingJoystick _joystick;
 
-    
+
     private float lastAttackTime;
 
     private Vector3 _direction;
     private Rigidbody _rigidbody;
     private float _currentTurnAngle;
-    
+
     public bool hasKey;
+
+    private Animator _animator;
 
     void Start()
     {
+        _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -34,6 +39,8 @@ public class PlayerController : MonoBehaviour
         }
 
         _direction = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);
+
+        _animator.SetFloat("Running", _direction.magnitude);
 
         if (_direction.magnitude > 0.01f)
         {
@@ -55,6 +62,18 @@ public class PlayerController : MonoBehaviour
         {
             item++;
             tree.GetComponent<Tree>().Hit();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Sea"))
+        {
+            _animator.SetBool("IsSwimming", true);
+        }
+        else if (collision.gameObject.CompareTag("Ground"))
+        {
+            _animator.SetBool("IsSwimming", false);
         }
     }
 }
